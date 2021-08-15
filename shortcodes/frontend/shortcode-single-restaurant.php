@@ -150,7 +150,124 @@ if (!class_exists('Foodbakery_Shortcode_Single_Restaurant_front')) {
                     .swiper-slide > a {color:<?php echo $s_font_color; ?>; font-weight: 600;}
                     .swiper-container.swiper-container-horizontal.fixed-header {
                         border-bottom: 3px solid <?php echo $s_bottom_color; ?>;}
+
+
                 </style>
+
+                <?php
+/******Ansu Repeate Order Start*******/
+$publisher_id = foodbakery_company_id_form_user_id(get_current_user_id());
+$publisher_type = get_post_meta($publisher_id, 'foodbakery_publisher_profile_type', true);
+if(is_user_logged_in() && $publisher_type != 'restaurant'){
+
+    global $post;   
+    $lastposts = get_posts( array(
+     'post_type'              => array( 'orders_inquiries' ),
+     'post_status'    => 'publish', 
+     'orderby'        => 'post_date',
+     'order'          => 'DESC',
+     'author'         => get_current_user_id(),
+     'posts_per_page' => 2
+) );
+ 
+//Code to check only the latest post from  each user is displayed.
+if ( $lastposts && !empty($lastposts) ) {
+    ?>
+        <div class="user_last_order user_last_order_mobile">
+ 
+       <h4 class="recent_order_title"><?php echo __('Πρόσφατες Παραγγελίες','foodbakery'); ?></h4>
+    <?php
+    $auther=""; 
+    foreach ( $lastposts as $post ) :
+        setup_postdata( $post ); 
+            if($auther!=get_the_author()) { 
+                $order_id = get_the_ID();
+                    $order_menu_list = get_post_meta($order_id, 'menu_items_list', true);
+                    $currency_sign = get_post_meta($order_id, 'foodbakery_currency', true);
+
+                     if (is_array($order_menu_list)) {
+                $menu_order_fee = get_post_meta($order_id, 'menu_order_fee', true);
+                $menu_order_fee_type = get_post_meta($order_id, 'menu_order_fee_type', true);
+                $payment_list = "";
+
+                $order_m_total = 0;
+
+                foreach ($order_menu_list as $_menu_list) {
+
+                    
+
+                    $title_item_cat = isset($_menu_list['category']) ? $_menu_list['category'] : '';
+                    $title_item = isset($_menu_list['title']) ? $_menu_list['title'] : '';
+                    $price_item = isset($_menu_list['price']) ? $_menu_list['price'] : '';
+                    $extras_item = isset($_menu_list['extras']) ? $_menu_list['extras'] : '';
+
+                    $extras_notes = isset($_menu_list['notes']) ? '<li>'.$_menu_list['notes'].'</li>' : '';
+
+                    $order_m_total = 0;
+                    if(!empty($extras_item)){
+                        foreach ($extras_item as $key => $eitem) {
+                            $order_m_total += floatval($eitem['quantity']*$eitem['price']);    
+                        }
+                    }else{
+                        $order_m_total = $price_item;
+                    }
+
+                    
+                    $sa_category_price = 0;
+                    $quantity = 1;
+                    $heading_extra_item ='';
+                    $order_m_total = get_post_meta($order_id,'services_total_price',true);
+                    $payment_list .= '
+                   
+                    
+                        <p>' . $title_item . '</p>
+                        <p><strong>'.__('Λεπτομέρειες','foodbakery').'</strong></p>
+                        <span class="category-price">'.__('Total','foodbakery').': '. foodbakery_get_currency($order_m_total, true, '', '', false) . '</span>
+                    ';
+
+                    break;
+
+                }
+            
+            }
+            
+        
+
+                ?>
+                <div class="order_box row">
+                    <!--Do your html code here -->
+                    <div class="box_wrapper">
+                        <div  class="order-heading-titles col-lg-9 col-sm-12 col-md-9">
+                            <?php 
+                                echo $payment_list;
+                            ?> 
+                        </div>
+                        <div class="repeat_order_icon col-lg-3 col-sm-12 col-sm-3">
+                            <a href="javascript:void(0);" data-order_id="<?php echo $order_id; ?>" class="btn btn-info btn-repeat_order">+</a>
+                        </div>
+                    </div>
+                </div>
+                <?php 
+
+            }
+     
+    endforeach; 
+    wp_reset_postdata();
+?>
+</div>
+<?php
+}else{
+    ?>
+    <div class="user_last_order_empty">
+        <div class="alert alert-info" role="alert">
+           <a href="/user-dashboard/?dashboard=account"><?php echo __('Ενημερώστε τα προσωπικά σας στοιχεία πριν κάνετε την πρώτη σας παραγγελία','foodbakery');?></a>
+        </div>
+    </div>
+    <?php
+}
+}
+?>
+
                 <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 sticky-sidebar">
                      <div class="swiper-container">
                              <div class="swiper-wrapper">
@@ -205,11 +322,117 @@ if (!class_exists('Foodbakery_Shortcode_Single_Restaurant_front')) {
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-9 col-xs-12">
                     <!--Tabs Start-->
+         <!----Ansu Repeate order Start -------->        
+                    <style type="text/css">
+                        .user_last_order {
+                            height: 280px;
+                        }
+                        .order_box h5 {
+                            margin-top: 10px;
+                        }
+                        .order_box {
+                            float: left;
+                            margin: 10px;
+                            border: 1px solid #efe8e8;
+                            height: 180px;
+                            width: 46%;
+                            padding: 0px 10px;
+                            background: #fff;
+                            border-radius: 10px;
+                            -webkit-box-shadow: 0 10px 6px -6px #777;
+                            -moz-box-shadow: 0 10px 6px -6px #777;
+                            box-shadow: 0 10px 6px -6px #777;
+                        }
+                        .user_last_order span.category-price {
+                            position: absolute;
+                            /* right: 0; */
+                            /* top: 5px; */
+                            margin-top: 20px;
+                            padding: 4px 0px;
+                        }
+
+                        .order-heading-titles {
+                            position: relative;
+                            padding-top: 10px;
+                        }
+
+                        .order-heading-titles p {
+                            margin: 0;
+                        }
+
+                        .order-heading-titles h6 {
+                            margin: 0;
+                        }
+                        a.btn.btn-repeat_order.btn-info {
+                            font-size: 30px;
+                            margin: 0 auto;
+                            text-align: center;
+                            vertical-align: middle;
+                            transform: translate(0px, 0px);
+                            padding: 5px 14px;
+                            box-shadow: blanchedalmond;
+                        }
+
+                        a.btn.btn-repeat_order.btn-info {
+                                background: #000;
+                                border: none;
+                        }
+
+                        .repeat_order_icon {
+                            margin: 0 auto;
+                            text-align: center;
+                            padding: 20px;
+                        }
+                        .box_wrapper {
+                            margin: 0 auto;
+                            transform: translate(0px, 15px);
+                        }
+
+                        h4.recent_order_title {
+                            margin-left: 18px;
+                        }
+                        .user_last_order_empty {
+                            height: 78px;
+                        }
+
+                        .user_last_order_empty  .alert.alert-info {
+                            background-color: #cfe2ff;
+                            border-color: #b6d4fe;
+                            color: #fff crimson;
+                            border-radius: 5px;
+                        }
+
+                        .user_last_order_empty  .alert.alert-info a {
+                            color: #000 !important;
+                            font-weight: 700;
+                        }
+
+                        @media screen and (max-width: 767px){
+                            .order_box {
+                                float: none;
+                                width: 100%;
+                                margin: 10px auto;
+                                padding: 10px;
+                            }
+                            .repeat_order_icon {
+                                position: absolute;
+                                right: 0;
+                            }
+                            .user_last_order {
+                                height: auto;
+                            }
+                        }
+                    </style>
                     <div class="back-to-t"></div>
-                     <div class="user_last_order">
-                                                            <?php
-                                                            global $post;   
-$lastposts = get_posts( array(
+
+<?php
+/******Ansu Repeate Order Start*******/
+$publisher_id = foodbakery_company_id_form_user_id(get_current_user_id());
+$publisher_type = get_post_meta($publisher_id, 'foodbakery_publisher_profile_type', true);
+if(is_user_logged_in() && $publisher_type != 'restaurant'){
+
+    global $post;   
+    $lastposts = get_posts( array(
      'post_type'              => array( 'orders_inquiries' ),
      'post_status'    => 'publish', 
      'orderby'        => 'post_date',
@@ -219,24 +442,144 @@ $lastposts = get_posts( array(
 ) );
  
 //Code to check only the latest post from  each user is displayed.
-if ( $lastposts ) {
+if ( $lastposts && !empty($lastposts) ) {
+    ?>
+        <div class="user_last_order user_last_order_desktop">
+ 
+       <h4 class="recent_order_title"><?php echo __('Πρόσφατες Παραγγελίες','foodbakery'); ?></h4>
+    <?php
     $auther=""; 
     foreach ( $lastposts as $post ) :
         setup_postdata( $post ); 
             if($auther!=get_the_author()) { 
+                $order_id = get_the_ID();
+                    $order_menu_list = get_post_meta($order_id, 'menu_items_list', true);
+                    $currency_sign = get_post_meta($order_id, 'foodbakery_currency', true);
+
+                     if (is_array($order_menu_list)) {
+                $menu_order_fee = get_post_meta($order_id, 'menu_order_fee', true);
+                $menu_order_fee_type = get_post_meta($order_id, 'menu_order_fee_type', true);
+                $payment_list = "";
+
+                $order_m_total = 0;
+
+                foreach ($order_menu_list as $_menu_list) {
+
+                    
+
+                    $title_item_cat = isset($_menu_list['category']) ? $_menu_list['category'] : '';
+                    $title_item = isset($_menu_list['title']) ? $_menu_list['title'] : '';
+                    $price_item = isset($_menu_list['price']) ? $_menu_list['price'] : '';
+                    $extras_item = isset($_menu_list['extras']) ? $_menu_list['extras'] : '';
+
+                    $extras_notes = isset($_menu_list['notes']) ? '<li>'.$_menu_list['notes'].'</li>' : '';
+
+                    $order_m_total = 0;
+                    if(!empty($extras_item)){
+                        foreach ($extras_item as $key => $eitem) {
+                            $order_m_total += floatval($eitem['quantity']*$eitem['price']);    
+                        }
+                    }else{
+                        $order_m_total = $price_item;
+                    }
+
+                    
+                    $sa_category_price = 0;
+                    $quantity = 1;
+                    $heading_extra_item ='';
+                    $order_m_total = get_post_meta($order_id,'services_total_price',true);
+                    $payment_list .= '
+                   
+                    
+                        <p>' . $title_item . '</p>
+                        <p><strong>'.__('Λεπτομέρειες','foodbakery').'</strong></p>
+                        <span class="category-price">'.__('Total','foodbakery').': '. foodbakery_get_currency($order_m_total, true, '', '', false) . '</span>
+                    ';
+
+                    break;
+
+                }
+            
+            }
+            
+        
 
                 ?>
-                <!--Do your html code here -->
-                <!-- <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2> -->
+                <div class="order_box row">
+                    <!--Do your html code here -->
+                    <div class="box_wrapper">
+                        <div  class="order-heading-titles col-lg-9 col-sm-12 col-md-9">
+                            <?php 
+                                echo $payment_list;
+                            ?> 
+                        </div>
+                        <div class="repeat_order_icon col-lg-3 col-sm-12 col-sm-3">
+                            <a href="javascript:void(0);" data-order_id="<?php echo $order_id; ?>" class="btn btn-info btn-repeat_order">+</a>
+                        </div>
+                    </div>
+                </div>
                 <?php 
 
             }
      
     endforeach; 
     wp_reset_postdata();
+?>
+</div>
+<?php
+}else{
+    ?>
+    <div class="user_last_order_empty">
+        <div class="alert alert-info" role="alert">
+           <a href="/user-dashboard/?dashboard=account"><?php echo __('Ενημερώστε τα προσωπικά σας στοιχεία πριν κάνετε την πρώτη σας παραγγελία','foodbakery');?></a>
+        </div>
+    </div>
+    <?php
 }
 ?>
-                                                        </div>
+
+<script type="text/javascript">
+    jQuery(document).on("click","a.btn.btn-info.btn-repeat_order",function(){
+        var order_id = jQuery(this).data("order_id");
+        var payment_mode = jQuery("input[name='order_payment_method']:checked").data("type");
+        $.confirm({
+            title: 'Επιβεβαίωση!',
+            content: 'Είστε βέβαιοι ότι θέλετε να επαναλάβετε την παραγγελία;',
+            buttons: {
+                Ναι: function () {
+                    
+                        $.ajax({
+                            url: foodbakery_globals.ajax_url,
+                            method: "POST",
+                            data: 'action=ansu_repeat_order&order_id='+order_id,
+                            dataType: "json"
+                        }).done(function (response) {
+                            console.log(response);
+                            var order_confirm = location.origin+"/order-detail/?action=reservation-order&trans_id="+response.order_id+"&menu_id="+response.rest_id+"&payment_mode="+payment_mode;
+                            window.location.href = order_confirm;
+                        }).fail(function () {
+                            console.log("Error, try again");
+                        });
+                },
+                Όχι: function () {
+                  return;  
+                },
+            }
+        });
+     
+
+
+
+    });
+</script>
+<?php
+}
+?>
+
+<div class="clearfix"></div>
+<!----Ansu Repeate order end -------->
+
+
                     <div class="tabs-holder horizontal">
 
                         <ul class="stickynav-tabs nav nav-tabs">
