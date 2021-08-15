@@ -522,8 +522,43 @@ if (!class_exists('Foodbakery_Restaurant_Menus')) {
                                 $precheck = 'checked';
                             }
 
+<<<<<<< HEAD
 
                             $form_extra_html .= '<ul id="menu-item-extra-fields-' . $menu_item_counter . $count_extra_li . $count_extra_inner_li_next . '" class="menu-item-extra-fields">
+=======
+                            if ($menu_item_extra_sub_title_s != '') {
+                                $form_extra_html .= '<ul id="menu-item-extra-fields-' . $menu_item_counter . $count_extra_li . $count_extra_inner_li_next . '" class="menu-item-extra-fields">
+                                                            <li id="menu-item-extra-field-' . $menu_item_counter . $count_extra_li . $count_extra_inner_li_next . '" class="menu-item-extra-field">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <div class="row">
+                                                                                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                                                                    <div class="field-holder">
+                                                                                            <label>' . esc_html__('Sub Title', 'foodbakery') . '</label>
+                                                                                            <input class="menu-item-extra-title" name="menu_item_extra[' . $menu_item_counter . '][' . $count_extra_inner_li . '][sub_title][]" type="text" value="' . esc_attr($menu_item_extra_sub_title_s) . '" placeholder="' . esc_html__('Sub Title', 'foodbakery') . '">
+                                                                                    <input class="menu-item-extra-title" name="menu_item_extra[' . $menu_item_counter . '][' . $count_extra_inner_li . '][title][]" type="hidden" value="' . esc_attr($menu_item_extra_title) . '" placeholder="' . esc_html__('Title', 'foodbakery') . '">
+<input class="menu-item-extra-price" name="menu_item_extra[' . $menu_item_counter . '][' . $count_extra_inner_li . '][quantity][]" type="hidden" value="' . esc_attr($menu_item_extra_quantity[$key]) . '" placeholder="' . esc_html__('Unlimited', 'foodbakery') . '">
+                                                                                    <input class="menu-item-extra-price" name="menu_item_extra[' . $menu_item_counter . '][' . $count_extra_inner_li . '][price][]" type="hidden" value="' . esc_attr($menu_item_extra_price) . '" placeholder="' . esc_html__('Price', 'foodbakery') . '">
+
+                                                                                    </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                                                                            <div class="menu-item-extra-options">
+                                                                                                    <label>&nbsp;</label>
+                                                                                                    <a href="javascript:void(0);" onClick="add_more_extra_option(\'' . $restaurant_add_counter . '\',\'' . $menu_item_counter . '\',\'' . esc_html__('Title', 'foodbakery') . '\',\'' . esc_html__('Price', 'foodbakery') . '\',\'' . $currency_sign . '\',\'' . $count_extra_li . '\',\'' . $count_extra_inner_li_next . '\');">+</a>
+                                                                                                    <a href="javascript:void(0);" onClick="remove_more_extra_option(\'' . $restaurant_add_counter . '\',\'' . $menu_item_counter . '\',\'' . $count_extra_li . '\',\'' . $count_extra_inner_li_next . '\');">-</a>
+                                                                                            </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                        </div>
+                                                            </li>
+                                                        </ul>';
+                            } else {
+
+
+                                $form_extra_html .= '<ul id="menu-item-extra-fields-' . $menu_item_counter . $count_extra_li . $count_extra_inner_li_next . '" class="menu-item-extra-fields">
+>>>>>>> 3ff723d0e2032594d6fb5d0bf1b5c67f527948d7
 												<li id="menu-item-extra-field-' . $menu_item_counter . $count_extra_li . $count_extra_inner_li_next . '" class="menu-item-extra-field">
 													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 														<div class="row">

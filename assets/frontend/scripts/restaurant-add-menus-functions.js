@@ -302,8 +302,15 @@ function add_more_extra_option(restaurant_counter, menu_item_counter, title, pri
                     </div>\n\
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">\n\
                         <div class="field-holder">\n\
+<<<<<<< HEAD
                             <label>' + price + ' (' + currency_sign + ')</label>\n\
                             <input class="menu-item-extra-price" id="menu_item_extra_price_' + menu_item_counter + '" name="menu_item_extra[' + menu_item_counter + '][' + count_extra_li + '][price][]" type="text" value="" placeholder="' + price + '">\n\
+=======
+                            <label>Sub title</label>\n\
+                            <input class="menu-item-extra-sub-title" id="menu_item_extra_sub_title_' + menu_item_counter + '" name="menu_item_extra[' + menu_item_counter + '][' + count_extra_li + '][sub_title][]" type="text" value="" placeholder="Sub title">\n\
+                            <input class="menu-item-extra-price" id="menu_item_extra_price_' + menu_item_counter + '" name="menu_item_extra[' + menu_item_counter + '][' + count_extra_li + '][price][]" type="hidden" value="0" placeholder="' + price + '">\n\
+\n\<input class="menu-item-extra-title" id="menu_item_extra_title_' + menu_item_counter + '" name="menu_item_extra[' + menu_item_counter + '][' + count_extra_li + '][title][]" type="hidden" value="" placeholder="' + title + '">\n\
+>>>>>>> 3ff723d0e2032594d6fb5d0bf1b5c67f527948d7
                         </div>\n\
                     </div>\n\
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">\n\

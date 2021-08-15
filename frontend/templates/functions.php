@@ -7392,7 +7392,11 @@ function restaurant_detail_menu_list($foodbakery_restaurant_id = '') {
 
                     $js_function = ' onclick="foodbakery_show_extra_menu_item(`extras-' . absint($menu_loop) . '-' . absint($menu_items_loop) . '`, `' . absint($menu_items_loop) . '`, `' . absint($menu_loop) . '`, `' . $ajax_url . '`, `' . $foodbakery_restaurant_id . '`)"';
                     ?>
+<<<<<<< HEAD
                                                     <!-- <a href="javascript:void(0);" class="dev-adding-menu-btn-<?php echo absint($menu_items_loop) ?>" onclick="foodbakery_show_extra_menu_item('extras-<?php echo absint($menu_loop) ?>-<?php echo absint($menu_items_loop) ?>', '<?php echo absint($menu_items_loop) ?>', '<?php echo absint($menu_loop) ?>', '<?php echo $ajax_url; ?>', '<?php echo $foodbakery_restaurant_id; ?>');"></a>
+=======
+                                                                    <!-- <a href="javascript:void(0);" class="dev-adding-menu-btn-<?php echo absint($menu_items_loop) ?>" onclick="foodbakery_show_extra_menu_item('extras-<?php echo absint($menu_loop) ?>-<?php echo absint($menu_items_loop) ?>', '<?php echo absint($menu_items_loop) ?>', '<?php echo absint($menu_loop) ?>', '<?php echo $ajax_url; ?>', '<?php echo $foodbakery_restaurant_id; ?>');"></a>
+>>>>>>> 3ff723d0e2032594d6fb5d0bf1b5c67f527948d7
                     -->
                     <?php
                 } else {
@@ -7709,9 +7713,15 @@ if (!function_exists('foodbakery_edit_extra_menu_item')) {
 
                                         <input type="name" class="form-control" value=" <?php echo $this_item_notes; ?>" name="extrasnotes"/>
 
+<<<<<<< HEAD
                                                                                                                 <!-- <textarea   rows="7"  wrap="virtual" style="height:auto;white-space: normal"  name="extras-notes-0" >
                                         <?php // echo $this_item_notes; ?>
                                                                                                                 </textarea> -->
+=======
+                                                                                                                                                                                <!-- <textarea   rows="7"  wrap="virtual" style="height:auto;white-space: normal"  name="extras-notes-0" >
+                                        <?php // echo $this_item_notes; ?>
+                                                                                                                                                                                </textarea> -->
+>>>>>>> 3ff723d0e2032594d6fb5d0bf1b5c67f527948d7
 
 
 
@@ -7885,6 +7895,15 @@ if (!function_exists('foodbakery_show_extra_menu_item')) {
                                                                     ?> </span>
                                                             </label>
 
+<<<<<<< HEAD
+=======
+                                                    <div class="extras-detail-att" style="border-top:1px solid #ebedf3;margin: 0;border-bottom: 0;padding-bottom: 5px;">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-xs-12">
+                                                                <h4 class="text-center" style="margin-bottom:0; margin-top: 5px"><?php echo $menu_item_extra_sub_titles; ?></h4>
+
+                                                            </div>
+>>>>>>> 3ff723d0e2032594d6fb5d0bf1b5c67f527948d7
                                                         </div>
 
 
@@ -7931,7 +7950,13 @@ if (!function_exists('foodbakery_show_extra_menu_item')) {
 
                                     <input type="name" class="form-control" placeholder="Notes" value=""  name="extrasnotes"/>
 
+<<<<<<< HEAD
                                                                                     <!-- <textarea rows="5"  cols="7"  style="height:100px" class="foodbakery-dev-req-field" name="extras-notes-0" placeholder="Notes"></textarea> --><!-- <input id="extra_notes" type="text" placeholder="Notes" class="form control" name="extras-notes-<?php echo $key; ?>" />                   -->
+=======
+                                                                                                                                    <!-- <textarea rows="5"  cols="7"  style="height:100px" class="foodbakery-dev-req-field" name="extras-notes-0" placeholder="Notes"></textarea> -->
+
+                                                                                                                                                                    <!-- <input id="extra_notes" type="text" placeholder="Notes" class="form control" name="extras-notes-<?php echo $key; ?>" />                   -->
+>>>>>>> 3ff723d0e2032594d6fb5d0bf1b5c67f527948d7
 
                                 </div>
 
